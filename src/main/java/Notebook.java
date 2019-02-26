@@ -7,7 +7,7 @@ public class Notebook implements NoteContainer{
 
     @Override
     public void add(Note note) {
-        if (note == null) {
+        if (note != null) {
             noteContainer.add(note);
         }
     }
