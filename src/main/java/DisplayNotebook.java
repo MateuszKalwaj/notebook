@@ -1,16 +1,16 @@
-import java.util.List;
 
 public class DisplayNotebook {
-    private List<Note> notesList;
+
+    private Notebook notebook;
     private DisplayStrategy displayStrategy;
 
-    public DisplayNotebook(List<Note> notebook, DisplayStrategy displayStrategy) {
-        this.notesList = notebook;
+    public DisplayNotebook(Notebook notebook, DisplayStrategy displayStrategy) {
+        this.notebook = notebook;
         this.displayStrategy = displayStrategy;
     }
 
     public void displayNotes() {
-        displayStrategy.display(notesList);
+        displayStrategy.display(notebook.fetchAll());
     }
 
 

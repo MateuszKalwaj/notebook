@@ -1,3 +1,4 @@
+
 import java.util.Date;
 
 public class Note {
@@ -42,14 +43,15 @@ public class Note {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Note)) return false;
-        Note note = (Note) o;
-        return getAuthor().equals(note.getAuthor()) &&
-                getTitle().equals(note.getTitle()) &&
-                getContent().equals(note.getContent()) &&
-                getDate().equals(note.getDate());
-    }
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Note note = (Note) o;
+
+        if (!title.equals(note.title)) return false;
+        if (!author.equals(note.author)) return false;
+        if (!content.equals(note.content)) return false;
+        return date.equals(note.date);
+    }
     @Override
     public String toString() {
         return "Note{" +
