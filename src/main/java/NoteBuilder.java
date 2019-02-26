@@ -22,9 +22,8 @@ public class NoteBuilder {
         this.content = content;
         return this;
     }
-    public NoteBuilder withDate (Date date) {
+    public void withDate (Date date) {
         this.date = date;
-        return this;
     }
 
     public Note build() {

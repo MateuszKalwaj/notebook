@@ -67,7 +67,7 @@ public class NotebookMain {
     }
 
     public static void menuToDisplay() {
-        System.out.println("Hello! \n" +
+        System.out.println("\nHello! \n" +
                 "What do you like to do? \n" +
                 "1 - add note \n" +
                 "2 - display all notes \n" +
@@ -88,7 +88,7 @@ public class NotebookMain {
             DisplayStrategy displayStrategy = new DisplayCompact();
             DisplayNotebook displayNotebook = new DisplayNotebook(notebook,displayStrategy);
             displayNotebook.displayNotes();
-        } else if (view == 2) {
+        } if (view == 2) {
             DisplayStrategy displayStrategy = new DisplayAll();
             DisplayNotebook displayNotebook = new DisplayNotebook(notebook, displayStrategy);
             displayNotebook.displayNotes();
