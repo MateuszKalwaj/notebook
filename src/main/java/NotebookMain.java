@@ -7,7 +7,8 @@ public class NotebookMain {
     public static void main(String[] args) {
         Scanner userInput = new Scanner(System.in);
 
-        Notebook notebook = new Notebook();
+        Notebook notebook = Notebook.getInstance();
+
         boolean program = true;
 
         while (program) {

@@ -2,6 +2,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Notebook implements NoteContainer{
+
+    private static Notebook notebook = new Notebook();
+
+    public static Notebook getInstance() {
+        return notebook;
+    }
+
+    private Notebook() {
+
+    }
     private List<Note> noteContainer = new ArrayList<>();
 
 
