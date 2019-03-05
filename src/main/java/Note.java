@@ -55,10 +55,10 @@ public class Note {
     @Override
     public String toString() {
         return "Note{" +
-                "author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", date=" + date +
+                "\nauthor='" + author + '\'' +
+                "\ntitle='" + title + '\'' +
+                "\ncontent='" + content + '\'' +
+                "\ndate=" + date +
                 '}';
     }
 

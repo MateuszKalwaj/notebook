@@ -23,7 +23,7 @@ public class Notebook implements NoteContainer{
     }
 
     @Override
-    public boolean remove(List<Note> notes) {
+    public boolean delete(List<Note> notes) {
         if (notes.isEmpty()) {
         }
         return noteContainer.removeAll(notes);
