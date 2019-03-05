@@ -1,8 +1,11 @@
 
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class NotebookMain {
+
+    String newNote;
 
     public static void main(String[] args) {
         Scanner userInput = new Scanner(System.in);
@@ -94,7 +97,24 @@ public class NotebookMain {
             DisplayNotebook displayNotebook = new DisplayNotebook(notebook, displayStrategy);
             displayNotebook.displayNotes();
         }
+
+
     }
+
+    public NoteBuilder mainBuilder() {
+        Scanner userInput = new Scanner(System.in);
+        NoteBuilder noteBuilder = new NoteBuilder();
+        newNote = userInput.next("Enter author");
+        noteBuilder.withAuthor(newNote);
+        newNote = userInput.next("Enter title");
+        noteBuilder.withTitle(newNote);
+        newNote = userInput.next("Enter content");
+        noteBuilder.withContent(newNote);
+        return noteBuilder;
+    }
+
+
+
 
 
 }
