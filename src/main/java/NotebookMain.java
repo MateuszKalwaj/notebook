@@ -2,6 +2,7 @@
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Filter;
 
 
 public class NotebookMain {
@@ -30,7 +31,7 @@ public class NotebookMain {
                     break;
                 }
                 case (3): {
-                    displayNotes(notesFilter(notebook) , howToDisplay());
+                    displayNotes(notesFilter(notebook), howToDisplay());
                     break;
                 }
                 case (4): {
@@ -42,7 +43,6 @@ public class NotebookMain {
                     break;
                 }
             }
-
         }
     }
 
@@ -54,7 +54,6 @@ public class NotebookMain {
         int displayway = userInput.nextInt();
         return displayway;
     }
-
 
 
     public static Note addNote() {
@@ -93,103 +92,143 @@ public class NotebookMain {
     }
 
     public static void displayNotes(List<Note> noteList, int howToDisplay) {
-        Scanner userInput = new Scanner(System.in);
-        int view = userInput.nextInt();
-        view = howToDisplay;
-
-
-        if (view == 1) {
+        if (howToDisplay == 1) {
             DisplayStrategy displayStrategy = new DisplayCompact();
             DisplayNotebook displayNotebook = new DisplayNotebook(noteList, displayStrategy);
             displayNotebook.displayNotes();
-        } if (view == 2) {
+        }
+        if (howToDisplay == 2) {
             DisplayStrategy displayStrategy = new DisplayAll();
             DisplayNotebook displayNotebook = new DisplayNotebook(noteList, displayStrategy);
             displayNotebook.displayNotes();
         }
-
-
     }
 
-    public static NoteFilter availableFilters() {
-        String author = null;
-        String title = null;
-        String content = null;
+    /* Filters that does not work
+        public static NoteFilter availableFilters() {
+            String author = null;
+            String title = null;
+            String content = null;
 
-        Scanner userInput = new Scanner(System.in);
+            Scanner userInput = new Scanner(System.in);
 
-        boolean program = true;
+            //boolean program = true;
 
-        while (program) {
-            menuToFilter();
-            int input = userInput.nextInt();
+            //while (program) {
+                menuToFilter();
+                int input = userInput.nextInt();
 
-            switch (input) {
-                case (1): {
-                    System.out.println("Enter author: ");
-                    userInput.nextLine();
-                    author = userInput.nextLine();
+                switch (input) {
+                    case (1): {
+                        System.out.println("Enter author: ");
+                        userInput.nextLine();
+                        author = userInput.nextLine();
+                    }
+                    case (2): {
+                        System.out.println("Enter title: ");
+                        userInput.nextLine();
+                        title = userInput.nextLine();
+                    }
+                    case (3): {
+                        System.out.println("Enter content: ");
+                        userInput.nextLine();
+                        content = userInput.nextLine();
+                    }
                 }
-                case (2): {
-                    System.out.println("Enter title: ");
-                    userInput.nextLine();
-                    title = userInput.nextLine();
-                }
-                case (3): {
-                    System.out.println("Enter content: ");
-                    userInput.nextLine();
-                    content = userInput.nextLine();
-                }
-            }
+            //}
+            FilterBuilder filterBuilder = new FilterBuilder();
+            filterBuilder.withAuthor(author).withTitle(title).withContent(content);
+            NoteFilter noteFilter = filterBuilder.build();
+            return noteFilter;
         }
-        FilterBuilder filterBuilder = new FilterBuilder();
-        filterBuilder.withAuthor(author).withTitle(title).withContent(content);
-        NoteFilter noteFilter = filterBuilder.build();
-        return noteFilter;
-    }
-
-    public static List<Note> notesFilter (Notebook notebook) {
-        NoteFilter noteFilter = availableFilters();
+    */
+    public static List<Note> notesFilter(Notebook notebook) {
+        NoteFilter noteFilter = filtersAvailable();
         return Predicates.listVsPredicates(notebook.fetchAll(), Predicates.predicateFilter(noteFilter));
     }
 
-    public static boolean deleteNote (Notebook notebook) {
+    public static boolean deleteNote(Notebook notebook) {
         Scanner userInput = new Scanner(System.in);
-        List <Note> filteredNotes = notesFilter(notebook);
+        List<Note> filteredNotes = notesFilter(notebook);
         int howToDisplay = 1;
         System.out.println("Following notes are going to remove: ");
         displayNotes(filteredNotes, howToDisplay);
         System.out.println("Press Y to confirm");
-        String confirm =userInput.next();
+        String confirm = userInput.next();
         if (confirm.equalsIgnoreCase("y")) {
             notebook.delete(filteredNotes);
             System.out.println("Note deleted");
             return true;
-        } else  {
+        } else {
             System.out.println("Nothing changed");
             return false;
         }
     }
 
+    /*Method is not relevant
     public static void menuToFilter() {
         System.out.println(
                 "How do you like to filter? \n" +
                 "1 - by author \n" +
                 "2 - by title \n" +
                 "3 - content \n");
-    }
+    }*/
 
+    /* Method is not relevant
+        public NoteBuilder mainBuilder() {
+            Scanner userInput = new Scanner(System.in);
+            NoteBuilder noteBuilder = new NoteBuilder();
+            newNote = userInput.next("Enter author");
+            noteBuilder.withAuthor(newNote);
+            newNote = userInput.next("Enter title");
+            noteBuilder.withTitle(newNote);
+            newNote = userInput.next("Enter content");
+            noteBuilder.withContent(newNote);
+            return noteBuilder;
+        }
+    */
+    public static NoteFilter filtersAvailable() {
+        String title;
+        String author;
+        String content;
+        String command;
 
-    public NoteBuilder mainBuilder() {
         Scanner userInput = new Scanner(System.in);
-        NoteBuilder noteBuilder = new NoteBuilder();
-        newNote = userInput.next("Enter author");
-        noteBuilder.withAuthor(newNote);
-        newNote = userInput.next("Enter title");
-        noteBuilder.withTitle(newNote);
-        newNote = userInput.next("Enter content");
-        noteBuilder.withContent(newNote);
-        return noteBuilder;
+
+        System.out.println("Filter by: title? (y/n): ");
+        command = userInput.next();
+        if (command.equals("y")) {
+            System.out.println("Enter title:");
+            userInput.nextLine();
+            title = userInput.nextLine();
+        } else title = null;
+
+        System.out.println("Filter by: author? (y/n): ");
+        command = userInput.next();
+        if (command.equals("y")) {
+            System.out.println("Enter author:");
+            userInput.nextLine();
+            author = userInput.nextLine();
+        } else {
+            author = null;
+        }
+
+        System.out.println("Filter by: content? (y/n): ");
+        command = userInput.next();
+        if (command.equals("y")) {
+            System.out.println("Enter content:");
+            userInput.nextLine();
+            content = userInput.nextLine();
+        } else content = null;
+
+        if ((title == null) && (author == null) && (content == null)) {
+            return new NoteFilter();
+        } else {
+            FilterBuilder filterBuilder = new FilterBuilder();
+            filterBuilder.withTitle(title).withAuthor(author).withContent(content);
+            NoteFilter noteFilter = filterBuilder.build();
+            return noteFilter;
+        }
     }
 
 
